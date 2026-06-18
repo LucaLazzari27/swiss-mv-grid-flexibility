@@ -6,7 +6,7 @@ This folder contains the final multistep FFOR formulation and the prepared
 input data required to run it independently.
 
 **Node-numbering convention:** the configuration uses internal grid-data bus
-IDs, while the report labels each node one number lower. For example, code bus
+IDs, while the paper labels each node one number lower. For example, code bus
 `130` corresponds to report node `N129`.
 
 ## Files
