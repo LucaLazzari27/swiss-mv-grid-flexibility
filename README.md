@@ -163,12 +163,19 @@ The main data and modelling sources used in the accompanying project report are:
 
 ## Limitations
 
-- The grid model is linearized around a flat-voltage operating point.
-- The prepared profiles represent selected future DER scenarios for 2030, 2040,
-  and 2050.
-- The FFOR depends on the selected timestamp, activation horizon, and optional
-  scenario assets in `config.py`.
-- A Gurobi license is required to solve the optimization problems.
+- The network is an MV-equivalent synthetic Swiss distribution grid derived
+  from open data; LV quantities are aggregated to their corresponding MV nodes.
+- The input profiles are hourly projections for the selected 2030, 2040, and
+  2050 scenarios.
+- The optimization uses a first-order linearized power-flow model. It retains
+  line resistance, reactance, and shunt susceptance, but does not represent
+  nonlinear active-power losses.
+- PV and BESS interventions are evaluated independently. The initial BESS state
+  of charge is fixed across simulations, and coordinated PV-BESS operation is
+  left as future work.
+- BESS units are inactive in the baseline, so the study does not evaluate
+  whether BESS corrective dispatch can restore infeasible baseline operating
+  points.
 
 ## Contributors
 
