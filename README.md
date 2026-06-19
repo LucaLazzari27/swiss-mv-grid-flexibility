@@ -135,13 +135,13 @@ Leave these lists empty to simulate the original grid without additional
 grid-scale assets or reinforcement.
 
 **Node-numbering convention:** the topology image above uses the node labels
-adopted in the report. The Python code uses the internal bus IDs from the grid
+adopted in the paper. The Python code uses the internal bus IDs from the grid
 data, which are one number higher. For example, node `129` in the image
 corresponds to code bus `130`.
 
 ## Data And Method Sources
 
-The main data and modelling sources used in the accompanying project report are:
+The main data and modelling sources used in the project are:
 
 - The synthetic MV electrical grid topology and parameters are taken from
   Oneto et al. (2024), "Large-Scale Generation of Geo-Referenced Power
@@ -190,7 +190,7 @@ The main data and modelling sources used in the accompanying project report are:
 ## Citing
 
 If you use this repository or the prepared data in further work, please cite
-the project report and the data and method sources listed above.
+the project and the data and method sources listed above.
 
 ## License
 
