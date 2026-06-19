@@ -1,5 +1,7 @@
 # Flexible Operating Regions for a Swiss MV Distribution Grid
 
+<img src="images/mv_grid_topology.png" width="700" alt="Topology of the synthetic medium-voltage distribution grid">
+
 This repository contains the final Python implementation and prepared input data
 used to compute multi-timestep Feasible Flexibility Operating Regions (FFORs)
 for a synthetic 20 kV medium-voltage distribution grid in Eschenbach SG,
@@ -132,9 +134,10 @@ The following studies can be configured directly in `config.py`:
 Leave these lists empty to simulate the original grid without additional
 grid-scale assets or reinforcement.
 
-**Node-numbering convention:** the Python code uses the internal bus IDs from
-the grid data, while the report labels each node one number lower. For example,
-code bus `130` corresponds to report node `N129`.
+**Node-numbering convention:** the topology image above uses the node labels
+adopted in the report. The Python code uses the internal bus IDs from the grid
+data, which are one number higher. For example, node `129` in the image
+corresponds to code bus `130`.
 
 ## Data And Method Sources
 
