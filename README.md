@@ -182,10 +182,10 @@ The main data and modelling sources used in the project are:
 
 ## Contributors
 
-- Luca Lazzari - MSc in Energy Science and Technology, ETH Zurich.
-- Pierpaolo Musiello - MSc in Energy Science and Technology, ETH Zurich.
+- Luca Lazzari - MSc in Energy Science and Technology, ETH Zürich.
+- Pierpaolo Musiello - MSc in Energy Science and Technology, ETH Zürich.
 - Alessandro Falezza - MSc in Electrical Engineering and Information
-  Technology.
+  Technology, ETH Zürich.
 
 ## Citing
 
