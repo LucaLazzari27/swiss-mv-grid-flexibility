@@ -143,11 +143,14 @@ corresponds to code bus `130`.
 
 The main data and modelling sources used in the accompanying project report are:
 
-- Oneto et al. (2024), "Large-Scale Generation of Geo-Referenced Power
+- The synthetic MV electrical grid topology and parameters are taken from
+  Oneto et al. (2024), "Large-Scale Generation of Geo-Referenced Power
   Distribution Grids Using Open Data", TechRxiv.
   DOI: `10.36227/techrxiv.24607662.v3`.
-- Zapparoli et al. (2025), "Future Deployment and Flexibility of Distributed
-  Energy Resources in the Distribution Grids of Switzerland", Scientific Data.
+- DER deployment data and future scenario profiles for demand, PV, EVs, heat
+  pumps, and distributed BESS are taken from Zapparoli et al. (2025), "Future
+  Deployment and Flexibility of Distributed Energy Resources in the
+  Distribution Grids of Switzerland", Scientific Data.
   DOI: `10.1038/s41597-025-05830-y`.
 - Lopez et al. (2021), "QuickFlex: a Fast Algorithm for Flexible Region
   Construction for the TSO-DSO Coordination", SEST 2021.
