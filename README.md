@@ -1,57 +1,91 @@
-# Optimization in Energy Systems Project
+# Flexible Operating Regions for a Swiss MV Distribution Grid
 
-**Authors:** Pierpaolo Musiello, Luca Lazzari, and Alessandro Falezza
+This repository contains the final Python implementation and prepared input data
+used to compute multi-timestep Feasible Flexibility Operating Regions (FFORs)
+for a synthetic 20 kV medium-voltage distribution grid in Eschenbach SG,
+Switzerland.
 
-This folder contains the final multistep FFOR formulation and the prepared
-input data required to run it independently.
+The project studies how network constraints, future DER deployment, resource
+location, and activation duration affect the flexibility that can be delivered
+at the point of common coupling (PCC). The code supports scenarios with
+additional large-scale photovoltaic (PV) fields, grid-scale battery energy
+storage systems (BESS), and physical-line reinforcement.
 
-**Node-numbering convention:** the configuration uses internal grid-data bus
-IDs, while the paper labels each node one number lower. For example, code bus
-`130` corresponds to report node `N129`.
+## Overview
 
-## Files
+The model builds a linearized distribution-grid optimization problem and uses a
+QuickFlex-style boundary search to construct the FFOR at the PCC. The resulting
+polygon describes the active and reactive power deviations that can be
+sustained over a selected activation horizon while respecting voltage, line,
+DER, BESS state-of-charge, and temperature-dependent heat-pump constraints.
 
-- `config.py`: scenario, DER, BESS, and reinforcement configuration.
-- `loader.py`: grid and profile loading utilities.
-- `model_data.py`: prepared-profile processing and optimization-data assembly.
-- `optimization.py`: linear multistep FFOR optimization model.
-- `run.py`: QuickFlex boundary calculation and output generation.
-- `requirements.txt`: required Python packages.
-- `data_checksums_sha256.csv`: optional integrity check for the prepared data.
+The repository is intended as a reproducible final project delivery: it contains
+the main modules, prepared data folders, and a compact example run that writes
+the FFOR boundary directly to CSV and PNG files.
 
-## Quick start
+## Requirements
 
-1. Install the packages listed in `requirements.txt`.
-2. Ensure that a valid Gurobi license is available.
-3. Select the scenario and optional assets in `config.py`.
-4. Run the model from this directory:
+- Python 3.10 or newer.
+- A valid Gurobi license.
+- Python packages listed in `requirements.txt`.
+
+Install the required packages from the repository root:
+
+```powershell
+pip install -r requirements.txt
+```
+
+## Quick Start
+
+1. Check or edit the scenario settings in `config.py`.
+2. Ensure that the required grid and profile data are present under `06_Grids/`
+   and `outputs/`.
+3. Run the model from the repository root:
 
 ```powershell
 python run.py
 ```
 
-Each run writes:
+Each run writes the following files in the repository root, replacing files
+from the previous run:
 
 - `ffor_boundary.csv`
 - `ffor_boundary.png`
 
-directly into this folder, replacing files from the previous run.
-
-By default, the code also looks for data inside this folder. To keep the data
+By default, the code looks for data inside this repository. To keep the data
 elsewhere, set `FFOR_DATA_ROOT` to the directory containing `06_Grids/` and
 `outputs/` before running the model. This supports read-only, authorized, or
-cloud-synchronized data locations without editing the Python modules. The year,
-target time, timestep count, and timestep duration can also be set through the
-`FFOR_DATA_YEAR`, `FFOR_TARGET_TIME`, `FFOR_N_TIMESTEPS`, and `FFOR_DT_H`
-environment variables.
+cloud-synchronized data locations without editing the Python modules.
 
-## Required data layout
+The year, target timestamp, timestep count, and timestep duration can also be
+set through environment variables:
 
-Run the code from this folder and place the prepared data underneath it using
-the following structure:
+- `FFOR_DATA_YEAR`
+- `FFOR_TARGET_TIME`
+- `FFOR_N_TIMESTEPS`
+- `FFOR_DT_H`
+
+## Repository Structure
+
+| Path | Purpose |
+| --- | --- |
+| `config.py` | Scenario, DER, BESS, PV, and reinforcement configuration. |
+| `loader.py` | Grid and profile loading utilities. |
+| `model_data.py` | Prepared-profile processing and optimization-data assembly. |
+| `optimization.py` | Linear multi-timestep FFOR optimization model. |
+| `run.py` | QuickFlex boundary calculation and output generation. |
+| `requirements.txt` | Python package requirements. |
+| `data_checksums_sha256.csv` | Optional SHA-256 manifest for checking prepared data files. |
+| `06_Grids/` | Grid topology and electrical data. |
+| `outputs/` | Prepared yearly demand, DER, weather, and allocation profiles. |
+
+## Data Layout
+
+Run the code from the repository root and place the prepared data underneath it
+using the following structure:
 
 ```text
-final_delivery/
+Optimization-in-Energy-Systems/
 |-- 06_Grids/
 |   |-- 20_0_nodes.txt
 |   |-- 20_0_edges.txt
@@ -65,7 +99,7 @@ final_delivery/
     `-- 20_0_profiles_mveq_evbase_2050/
 ```
 
-Each yearly profile directory requires these files:
+Each yearly profile directory requires:
 
 ```text
 baseline_demand_by_mv_node.csv
@@ -82,7 +116,12 @@ ffor_inputs/pv_mv_generation.csv
 ffor_inputs/pv_lv_generation.csv
 ```
 
-## Optional configurations
+`data_checksums_sha256.csv` records the expected SHA-256 hash of each prepared
+data file. It is not required by the simulation, but it should be retained when
+the data package is transferred or downloaded so recipients can verify that the
+inputs are complete and unchanged.
+
+## Scenario Configuration
 
 The following studies can be configured directly in `config.py`:
 
@@ -93,9 +132,55 @@ The following studies can be configured directly in `config.py`:
 Leave these lists empty to simulate the original grid without additional
 grid-scale assets or reinforcement.
 
-## Data integrity
+**Node-numbering convention:** the Python code uses the internal bus IDs from
+the grid data, while the report labels each node one number lower. For example,
+code bus `130` corresponds to report node `N129`.
 
-`data_checksums_sha256.csv` records the expected SHA-256 hash of each prepared
-data file. It is not required by the simulation, but should be retained when
-the data package is transferred or downloaded so recipients can verify that
-the inputs are complete and unchanged.
+## Data And Method Sources
+
+The main data and modelling sources used in the accompanying project report are:
+
+- Oneto et al. (2024), "Large-Scale Generation of Geo-Referenced Power
+  Distribution Grids Using Open Data", TechRxiv.
+  DOI: `10.36227/techrxiv.24607662.v3`.
+- Zapparoli et al. (2025), "Future Deployment and Flexibility of Distributed
+  Energy Resources in the Distribution Grids of Switzerland", Scientific Data.
+  DOI: `10.1038/s41597-025-05830-y`.
+- Lopez et al. (2021), "QuickFlex: a Fast Algorithm for Flexible Region
+  Construction for the TSO-DSO Coordination", SEST 2021.
+  DOI: `10.1109/SEST50973.2021.9543349`.
+- Arpagaus et al. (2023), "Field experience with residential heat pumps in
+  Switzerland: Potential for improvement and future developments", 14th IEA
+  Heat Pump Conference.
+- Brandle et al. (2025), "On the Flexibility Potential of a Swiss Distribution
+  Grid: Opportunities and Limitations", arXiv.
+  DOI: `10.48550/arXiv.2510.13449`.
+- Council of European Energy Regulators (2001), "Quality of electricity supply:
+  Initial benchmarking on actual levels, standards and regulatory strategies".
+
+## Limitations
+
+- The grid model is linearized around a flat-voltage operating point.
+- The prepared profiles represent selected future DER scenarios for 2030, 2040,
+  and 2050.
+- The FFOR depends on the selected timestamp, activation horizon, and optional
+  scenario assets in `config.py`.
+- A Gurobi license is required to solve the optimization problems.
+
+## Contributors
+
+- Luca Lazzari - MSc in Energy Science and Technology, ETH Zurich.
+- Pierpaolo Musiello - MSc in Energy Science and Technology, ETH Zurich.
+- Alessandro Falezza - MSc in Electrical Engineering and Information
+  Technology.
+
+## Citing
+
+If you use this repository or the prepared data in further work, please cite
+the project report and the data and method sources listed above.
+
+## License
+
+No standalone license file is included in this repository at the time of
+writing. Please contact the contributors before redistributing or reusing the
+code and prepared data outside the project context.
