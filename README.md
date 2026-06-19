@@ -164,18 +164,18 @@ The main data and modelling sources used in the accompanying project report are:
 ## Limitations
 
 - The network is an MV-equivalent synthetic Swiss distribution grid derived
-  from open data; LV quantities are aggregated to their corresponding MV nodes.
+  from open data.
 - The input profiles are hourly projections for the selected 2030, 2040, and
-  2050 scenarios.
+  2050 scenarios, introducing a degree of uncertainty in the model.
 - The optimization uses a first-order linearized power-flow model. It retains
   line resistance, reactance, and shunt susceptance, but does not represent
   nonlinear active-power losses.
-- PV and BESS interventions are evaluated independently. The initial BESS state
-  of charge is fixed across simulations, and coordinated PV-BESS operation is
-  left as future work.
+- PV and BESS interventions are evaluated independently; coordinated PV-BESS
+  operation is not considered.
 - BESS units are inactive in the baseline, so the study does not evaluate
   whether BESS corrective dispatch can restore infeasible baseline operating
-  points.
+  points. Furthermore, the initial BESS state of charge is fixed across
+  simulations.
 
 ## Contributors
 
